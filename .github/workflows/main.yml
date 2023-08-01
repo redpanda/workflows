@@ -1,0 +1,32 @@
+
+on:
+  workflow_call:
+    inputs:
+      file:
+        type: string
+        description: 'File to validate'
+        required: true
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: List files
+      run: ls -la
+
+    - name: Check JSON file
+      uses: redpanda/workflows/.github/actions/validate-json@main
+      env:
+        ENV: ${GITHUB_REF_NAME#"translations-"}
+      with:
+        file: ${{ inputs.file }}
+
+    # - name: Transform JSON file to Yaml
+    #   uses: redpanda/workflows/.github/actions/json2yaml@main
+    #   with:
+    #     file: ${{ inputs.file }}

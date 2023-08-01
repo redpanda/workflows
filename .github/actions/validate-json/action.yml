@@ -1,0 +1,24 @@
+name: Validate JSON
+description: Validate JSON file
+
+inputs:
+  file:
+    description: 'The JSON file to validate'
+    required: true
+
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
+  # steps:
+  #   - name: List files
+  #     run: ls -la
+  #     shell: bash
+  #   - name: Setup Node.js
+  #     uses: actions/setup-node@v3
+  #   - name: Install Dependencies
+  #     run: npm install -g zx
+  #     shell: bash
+  #   - name: Validate JSON
+  #     run: bin/validate-json.ts ${{ inputs.file }}
+  #     shell: bash
+
