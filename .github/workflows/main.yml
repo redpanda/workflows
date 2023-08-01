@@ -1,22 +1,16 @@
+name: Staging
 
 on:
-  workflow_call:
+  push:
+    branches:
+      - staging
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  analyze:
-    name: Analyze
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Check JSON file
-      uses: redpanda/workflows/.github/actions/validate@main
-      with:
-        file: file.json
-
-    - name: Transform JSON file to Yaml
-      uses: redpanda/workflows/.github/actions/json2yaml@main
-      with:
-        file: file.json
+  run:
+    uses: redpanda/workflows/.github/workflows/main.yml@main
+    with:
+      file: file.json
